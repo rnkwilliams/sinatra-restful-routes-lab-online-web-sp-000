@@ -1,10 +1,11 @@
 class ApplicationController < Sinatra::Base
+  require 'pry'
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
   end
 
- get '/recipes' do
+  get '/recipes' do
     @recipes = Recipe.all
     erb :index
   end
@@ -38,7 +39,9 @@ class ApplicationController < Sinatra::Base
   end
 
   delete '/recipes/:id/delete' do
-    Recipe.find(params[:id]).destroy
+    recipe = Recipe.find(params[:id])
+    recipe.delete
     redirect to '/recipes'
   end
+
 end
